@@ -16,6 +16,13 @@ public class DVDs implements LibraryItem {
         this.duration = duration;
     }
 
+    public DVDs(String id,String title, String director, int duration) {
+        this.id = id;
+        this.title = title;
+        this.director = director;
+        this.duration = duration;
+    }
+
     public void setDirector(String director) {
         this.director = director;
     }
@@ -48,9 +55,9 @@ public class DVDs implements LibraryItem {
     }
 
     @Override
-    public int compareTo(LibraryItem item) {
+    public int compareTo(String title) {
         // If it is equal, this method returns 0
-        return this.title.compareTo(item.getTitle());
+        return this.title.compareTo(title);
     }
 
     @Override

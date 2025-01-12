@@ -16,6 +16,13 @@ public class Magazine implements LibraryItem {
         this.issueNumber = issueNumber;
     }
 
+    public Magazine(String id,String title, String publisher, int issueNumber) {
+        this.id = id;
+        this.title = title;
+        this.publisher = publisher;
+        this.issueNumber = issueNumber;
+    }
+
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
@@ -48,9 +55,9 @@ public class Magazine implements LibraryItem {
     }
 
     @Override
-    public int compareTo(LibraryItem item) {
+    public int compareTo(String title) {
         // If it is equal, this method returns 0
-        return this.title.compareTo(item.getTitle());
+        return this.title.compareTo(title);
     }
 
     @Override

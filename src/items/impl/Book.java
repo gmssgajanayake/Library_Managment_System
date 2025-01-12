@@ -16,6 +16,13 @@ public class Book implements LibraryItem {
         this.numberOfPages = numberOfPages;
     }
 
+    public Book(String id,String title, String author, int numberOfPages) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.numberOfPages = numberOfPages;
+    }
+
     public void setNumberOfPages(int numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
@@ -48,9 +55,9 @@ public class Book implements LibraryItem {
     }
 
     @Override
-    public int compareTo(LibraryItem item) {
+    public int compareTo(String title) {
         // If it is equal, this method returns 0
-        return this.title.compareTo(item.getTitle());
+        return this.title.compareTo(title);
     }
 
     @Override
