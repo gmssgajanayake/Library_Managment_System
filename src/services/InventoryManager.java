@@ -5,6 +5,7 @@ import items.LibraryItem;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class InventoryManager<T extends LibraryItem> {
 
@@ -55,8 +56,9 @@ public class InventoryManager<T extends LibraryItem> {
 		}
 
 		if (removedItem!=null) {
-			currentInventory.remove(removedItem);
-			outOfInventory.add(removedItem);
+			//currentInventory.remove(removedItem);
+			//outOfInventory.add(removedItem);
+			transferItems(currentInventory,outOfInventory,removedItem);
 		}
 		return removedItem;
 	}
@@ -78,21 +80,26 @@ public class InventoryManager<T extends LibraryItem> {
 		System.out.println(items);
 	}
 
-	public T checkOutOfInventory(String title){
-		for(T t : outOfInventory){
-			if(t.compareTo(title)==0){
-				outOfInventory.remove(t);
-				return t;
-			}
-		}
-		return null;
+	public LibraryItem checkOutOfInventory(String title){
+        return findByTitle(outOfInventory,title);
 	}
 
-	public LibraryItem findByTitle(String title){
-		return findByTitle(inventory,title);
+	public void removeItemFromOutOfInventory(T item){
+		outOfInventory.remove(item);
 	}
 
-	public LibraryItem findByTitle(Collection<? extends LibraryItem> items,String title){
+	public Collection<T> searchItemsByTitle(String title){
+		// Here the lambda expression is used.
+		return filterItems(inventory,item -> item.compareTo(title)==0);
+	}
+
+	public Collection<T> searchItemsById(String id){
+		// Here the lambda expression is used.
+		return filterItems(inventory,item -> item.getId().equals(id));
+	}
+
+
+	private LibraryItem findByTitle(Collection<? extends LibraryItem> items,String title){
 		for(LibraryItem t : items){
 			if(t.compareTo(title)==0){
 				return t;
@@ -101,9 +108,19 @@ public class InventoryManager<T extends LibraryItem> {
 		return null;
 	}
 
-	public void transferItems(Collection<? extends T> source, Collection<? super T> destination){
-		destination.addAll(source);
-		source.clear();
+	private void transferItems(Collection<? extends T> source, Collection<? super T> destination,T item){
+		source.remove(item);
+		destination.add(item);
 	}
 
+	private Collection<T> filterItems(Collection<? extends T> source, Predicate<? super T> filter){
+
+		Collection<T> filteredCollection=new HashSet<>();
+
+        for (T t : source) {
+			if(filter.test(t)) filteredCollection.add(t);
+        }
+
+		return filteredCollection;
+	}
 }

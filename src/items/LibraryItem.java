@@ -14,5 +14,4 @@ public interface LibraryItem extends Comparable<String> {
     public void setTitle(String title);
 
     public String getId();
-
 }
