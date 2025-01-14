@@ -6,10 +6,11 @@ import items.impl.DVDs;
 import items.impl.Magazine;
 import services.InventoryManager;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
-    //private static final Scanner input = new Scanner(System.in);
     private static final InventoryManager<LibraryItem> inventoryManager = new InventoryManager<>();
 
     public static void initializr() {
@@ -18,8 +19,8 @@ public class Main {
         System.out.println("|\t\tLibrary Management System\t\t|");
         System.out.println("+-------------------------------------------------------+\n");
         System.out.println("[1] Add Items\t\t\t[2] Remove Items\n");
-        System.out.println("[3] Search Items\t\t[5] Filter Items\n");
-        System.out.println("[4] Available Items\t\t[6] Inventory Items\n");
+        System.out.println("[3] Search Items\t\t[4] Filter Items\n");
+        System.out.println("[5] Available Items\t\t[6] Inventory Items\n");
 
         int option = 0;
         Scanner input = new Scanner(System.in);
@@ -38,21 +39,142 @@ public class Main {
         switch (option) {
             case 1:
                 loadAddItemsMenu();
+                break;
             case 2:
                 loadRemoveItemsMenu();
+                break;
             case 3:
-                loadPrintInventoryDetails();
-            case 4:
-                loadPrintCurrentInventoryDetails();
-            case 5:
                 loadSearchItemsByTitle();
+                break;
+            case 4:
+                loadFilterItems();
+                break;
+            case 5:
+                loadPrintCurrentInventoryDetails();
+                break;
+            case 6:
+                loadPrintInventoryDetails();
+                break;
             default:
                 initializr();
+                break;
         }
     }
 
-    private static void loadSearchItemsByTitle() {
+    private static void loadFilterItems() {
+        try {
+            clearConsole();
+            System.out.println("+-------------------------------------------------------+");
+            System.out.println("|\tLibrary Management System - Filter All Items\t|");
+            System.out.println("+-------------------------------------------------------+\n");
+            System.out.println("[1] Filter all Books\n");
+            System.out.println("[3] Filter all Magazine");
+            System.out.println("[5] Filter all DVDs\n");
 
+            int option = 0;
+            Scanner input = new Scanner(System.in);
+
+            try {
+                System.out.print("\nEnter option here : ");
+                option = input.nextInt();
+            } catch (Exception e) {
+                System.out.println("*** Enter only numbers 1 to 6 ***");
+                System.out.println("\n+---------------------------------------------------+\n");
+                initializr();
+            }
+
+            System.out.println("\n+---------------------------------------------------+\n");
+
+            switch (option) {
+                case 1:
+                    filterAllBooks();
+                    break;
+                case 2:
+                    filterAllMagazines();
+                    break;
+                case 3:
+                    filterAllDVDs();
+                    break;
+                default:
+                    initializr();
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong !!!");
+            System.out.print("Please enter to go back : ");
+            new Scanner(System.in).nextLine();
+            initializr();
+        }
+    }
+
+    private static void filterAllBooks() {
+        HashSet<Book> bookCollection = new HashSet<>();
+        Collection<LibraryItem> collection = inventoryManager.getInventory();
+
+        for (LibraryItem item : collection) {
+            if (item instanceof Book) { // **** instanceof is a comparison operator
+                bookCollection.add((Book) item);
+            }
+        }
+
+        System.out.println("Filtered Books: \n" + bookCollection);
+        System.out.print("Please enter to go back : ");
+        new Scanner(System.in).nextLine();
+        initializr();
+    }
+
+
+    private static void filterAllDVDs() {
+        HashSet<DVDs> dvdsCollection = new HashSet<>();
+        Collection<LibraryItem> collection = inventoryManager.getInventory();
+
+        for (LibraryItem item : collection) {
+            if (item instanceof DVDs) { // **** instanceof is a comparison operator
+                dvdsCollection.add((DVDs) item);
+            }
+        }
+
+        System.out.println("Filtered DVDs: \n" + dvdsCollection);
+        System.out.print("Please enter to go back : ");
+        new Scanner(System.in).nextLine();
+        initializr();
+
+    }
+
+    private static void filterAllMagazines() {
+        HashSet<Magazine> magazineCollection = new HashSet<>();
+        Collection<LibraryItem> collection = inventoryManager.getInventory();
+
+        for (LibraryItem item : collection) {
+            if (item instanceof Magazine) { // **** instanceof is a comparison operator
+                magazineCollection.add((Magazine) item);
+            }
+        }
+
+        System.out.println("Filtered DVDs: \n" + magazineCollection);
+        System.out.print("Please enter to go back : ");
+        new Scanner(System.in).nextLine();
+        initializr();
+    }
+
+    private static void loadSearchItemsByTitle() {
+        try {
+            Scanner input = new Scanner(System.in);
+            clearConsole();
+            System.out.println("+-------------------------------------------------------+");
+            System.out.println("|\tLibrary Management System - Search Items\t|");
+            System.out.println("+-------------------------------------------------------+\n");
+            System.out.print("Enter title : ");
+            String title = input.nextLine();
+            System.out.println("\n" + inventoryManager.searchItemsByTitle(title));
+            System.out.print("\nPress enter to go back : ");
+            input.nextLine();
+            initializr();
+        } catch (Exception e) {
+            System.out.println("Not found !!!");
+            delay(1500);
+            initializr();
+        }
     }
 
     private static void loadAddItemsMenu() {
@@ -80,14 +202,19 @@ public class Main {
         switch (option) {
             case 1:
                 addBooks();
+                break;
             case 2:
                 addMagazines();
+                break;
             case 3:
                 addDVDs();
+                break;
             case 4:
                 initializr();
+                break;
             default:
                 loadAddItemsMenu();
+                break;
         }
     }
 
@@ -95,20 +222,19 @@ public class Main {
         Scanner input = new Scanner(System.in);
         clearConsole();
         System.out.println("+-------------------------------------------------------+");
-        System.out.println("|\tLibrary Management System - Remove Items\t\t|");
+        System.out.println("|\tLibrary Management System - Remove Items\t|");
         System.out.println("+-------------------------------------------------------+\n");
 
         System.out.print("Enter title : ");
         String title = input.nextLine();
-        LibraryItem libraryItem=inventoryManager.removeItem(title);
+        LibraryItem libraryItem = inventoryManager.removeItem(title);
 
-
-        if(libraryItem!=null){
+        if (libraryItem != null) {
             System.out.println();
             System.out.println("The item was found - ");
-            System.out.println("\t"+libraryItem);
+            System.out.println("\t" + libraryItem);
             loading("removed");
-        }else {
+        } else {
             System.out.println("\n **** Item is not available ****");
             delay(1500);
         }
@@ -116,19 +242,34 @@ public class Main {
     }
 
     private static void loadPrintCurrentInventoryDetails() {
-        Scanner input = new Scanner(System.in);
-        clearConsole();
-        inventoryManager.printCurrentInventory();
-        System.out.print("Press any key to go back : " + input.nextLine());
-        initializr();
+        try {
+            Scanner input = new Scanner(System.in);
+            clearConsole();
+            inventoryManager.printCurrentInventory();
+            System.out.print("Press enter to go back : ");
+            input.nextLine();
+            initializr();
+        } catch (Exception e) {
+            System.out.println("Something went wrong, Try again !!!");
+            delay(1500);
+            loadPrintInventoryDetails();
+        }
     }
 
     private static void loadPrintInventoryDetails() {
-        Scanner input = new Scanner(System.in);
-        clearConsole();
-        inventoryManager.printInventory();
-        System.out.print("Press any key to go back : " + input.nextLine());
-        initializr();
+
+        try {
+            Scanner input = new Scanner(System.in);
+            clearConsole();
+            inventoryManager.printInventory();
+            System.out.print("Press enter to go back : ");
+            input.nextLine();
+            initializr();
+        } catch (Exception e) {
+            System.out.println("Something went wrong, Try again !!!");
+            delay(1500);
+            loadPrintInventoryDetails();
+        }
     }
 
     private static void addDVDs() {
@@ -146,7 +287,7 @@ public class Main {
             int duration;
 
             System.out.println();
-            DVDs item= (DVDs) inventoryManager.checkOutOfInventory(title);
+            DVDs item = (DVDs) inventoryManager.checkOutOfInventory(title);
 
             if (item != null) {
                 System.out.println("Director : " + item.getDirector());
@@ -270,7 +411,7 @@ public class Main {
         System.out.flush();
     }
 
-    private static void loading(String action){
+    private static void loading(String action) {
         System.out.print("Loading ");
         delay(300);
         System.out.print(".");
@@ -278,11 +419,11 @@ public class Main {
         System.out.print(".");
         delay(300);
         System.out.print(".");
-        System.out.print("\b\b\b\b\b\b\b\b\b\b\b*** Successfully "+action+" ***");
+        System.out.print("\b\b\b\b\b\b\b\b\b\b\b*** Successfully " + action + " ***");
         delay(1500);
     }
 
-    private static void delay(int time){
+    private static void delay(int time) {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {

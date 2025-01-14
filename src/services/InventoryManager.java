@@ -93,11 +93,14 @@ public class InventoryManager<T extends LibraryItem> {
 		return filterItems(inventory,item -> item.compareTo(title)==0);
 	}
 
+	public Collection<T> getInventory(){
+		return inventory;
+	}
+
 	public Collection<T> searchItemsById(String id){
 		// Here the lambda expression is used.
 		return filterItems(inventory,item -> item.getId().equals(id));
 	}
-
 
 	private LibraryItem findByTitle(Collection<? extends LibraryItem> items,String title){
 		for(LibraryItem t : items){
