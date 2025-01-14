@@ -68,8 +68,9 @@ public class Main {
             System.out.println("|\tLibrary Management System - Filter All Items\t|");
             System.out.println("+-------------------------------------------------------+\n");
             System.out.println("[1] Filter all Books\n");
-            System.out.println("[3] Filter all Magazine");
-            System.out.println("[5] Filter all DVDs\n");
+            System.out.println("[2] Filter all Magazine\n");
+            System.out.println("[3] Filter all DVDs\n");
+            System.out.println("[4] Back\n");
 
             int option = 0;
             Scanner input = new Scanner(System.in);
@@ -108,6 +109,7 @@ public class Main {
     }
 
     private static void filterAllBooks() {
+        clearConsole();
         HashSet<Book> bookCollection = new HashSet<>();
         Collection<LibraryItem> collection = inventoryManager.getInventory();
 
@@ -117,14 +119,15 @@ public class Main {
             }
         }
 
-        System.out.println("Filtered Books: \n" + bookCollection);
-        System.out.print("Please enter to go back : ");
+        System.out.println("Filtered Books: \n\n" + bookCollection);
+        System.out.print("\nPlease enter to go back : ");
         new Scanner(System.in).nextLine();
-        initializr();
+        loadFilterItems();
     }
 
 
     private static void filterAllDVDs() {
+        clearConsole();
         HashSet<DVDs> dvdsCollection = new HashSet<>();
         Collection<LibraryItem> collection = inventoryManager.getInventory();
 
@@ -134,14 +137,15 @@ public class Main {
             }
         }
 
-        System.out.println("Filtered DVDs: \n" + dvdsCollection);
-        System.out.print("Please enter to go back : ");
+        System.out.println("Filtered DVDs: \n\n" + dvdsCollection);
+        System.out.print("\nPlease enter to go back : ");
         new Scanner(System.in).nextLine();
-        initializr();
+        loadFilterItems();
 
     }
 
     private static void filterAllMagazines() {
+        clearConsole();
         HashSet<Magazine> magazineCollection = new HashSet<>();
         Collection<LibraryItem> collection = inventoryManager.getInventory();
 
@@ -151,10 +155,10 @@ public class Main {
             }
         }
 
-        System.out.println("Filtered DVDs: \n" + magazineCollection);
-        System.out.print("Please enter to go back : ");
+        System.out.println("Filtered DVDs: \n\n" + magazineCollection);
+        System.out.print("\nPlease enter to go back : ");
         new Scanner(System.in).nextLine();
-        initializr();
+        loadFilterItems();
     }
 
     private static void loadSearchItemsByTitle() {
