@@ -63,11 +63,6 @@ This is a console application designed to manage the inventory of a library, whi
 ![App Screenshot](https://raw.githubusercontent.com/gmssgajanayake/Library_Managment_System/master/Screenshot%202025-01-14%20at%2013.23.03.png)
 
 
-## [1] Add Items
-
-![App Screenshot](https://raw.githubusercontent.com/gmssgajanayake/Library_Managment_System/master/Screenshot%202025-01-14%20at%2012.50.32.png)
-
-
 ## [2] Remove Items
 
 * Seach from title and the remove it.
