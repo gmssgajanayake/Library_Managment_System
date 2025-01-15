@@ -14,9 +14,9 @@ public class InventoryManager<T extends LibraryItem> {
 	private final Collection<T> outOfInventory;
 
 	public InventoryManager(){
-        this.inventory=new HashSet<>();
-		this.currentInventory=new HashSet<>();
-		this.outOfInventory = new HashSet<>();
+        this.inventory=new HashSet<T>();
+		this.currentInventory=new HashSet<T>();
+		this.outOfInventory = new HashSet<T>();
 	}
 
 	// Adds item to current inventory if it existed before, otherwise, it is added as a new item
